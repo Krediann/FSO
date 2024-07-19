@@ -1,82 +1,64 @@
-interface HeaderProps {
-  course: string
+interface Course {
+  name: string
+  parts: Part[]
 }
 
-interface ContentProps {
-  part1: string
-  exercises1: number
-  part2: string
-  exercises2: number
-  part3: string
-  exercises3: number
+interface CourseProps {
+  course: Course
 }
 
-interface TotalProps {
-  exercises1: number
-  exercises2: number
-  exercises3: number
+interface Part {
+  name: string
+  exercises: number
+}
+
+const Header = (props: CourseProps) => {
+  return (
+    <div>
+      <h1>{props.course.name}</h1>
+    </div>
+  )
+}
+
+const Content = (props: CourseProps) => {
+  return (
+    <div>
+      {props.course.parts.map((part, index) => (
+        <p key={index}>
+          {part.name} {part.exercises}
+        </p>
+      ))}
+    </div>
+  )
+}
+
+const Total = (props: CourseProps) => {
+  let total = 0
+  props.course.parts.map((part) => (total += part.exercises))
+
+  return (
+    <div>
+      <p>Number of exercises {total}</p>
+    </div>
+  )
 }
 
 const App = () => {
-  const course = "Half Stack application development"
-  const part1 = "Fundamentals of React"
-  const exercises1 = 10
-  const part2 = "Using props to pass data"
-  const exercises2 = 7
-  const part3 = "State of a component"
-  const exercises3 = 14
+  const course = {
+    name: "Half Stack application development",
+    parts: [
+      { name: "Fundamentals of React", exercises: 10 },
+      { name: "Using props to pass data", exercises: 7 },
+      { name: "State of a component", exercises: 14 },
+    ],
+  }
 
   return (
     <div>
       <Header course={course} />
-      <Content
-        part1={part1}
-        exercises1={exercises1}
-        part2={part2}
-        exercises2={exercises2}
-        part3={part3}
-        exercises3={exercises3}
-      />
-      <Total
-        exercises1={exercises1}
-        exercises2={exercises2}
-        exercises3={exercises3}
-      />
-    </div>
-  )
-}
 
-const Header = (props: HeaderProps) => {
-  return (
-    <div>
-      <h1>{props.course}</h1>
-    </div>
-  )
-}
-
-const Content = (props: ContentProps) => {
-  return (
-    <div>
-      <p>
-        {props.part1} {props.exercises1}
-      </p>
-      <p>
-        {props.part2} {props.exercises2}
-      </p>
-      <p>
-        {props.part3} {props.exercises3}
-      </p>
-    </div>
-  )
-}
-
-const Total = (props: TotalProps) => {
-  return (
-    <div>
-      <p>
-        Number of exercises{" "}
-        {props.exercises1 + props.exercises2 + props.exercises3}
-      </p>
+      <Content course={course} />
+      {<Total course={course} />}
     </div>
   )
 }
