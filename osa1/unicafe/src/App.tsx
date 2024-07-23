@@ -52,20 +52,46 @@ interface StatisticsProps {
 const Statistics = (props: StatisticsProps) => {
   if (props.allReviews > 0) {
     return (
-      <div>
-        <StatisticLine text="Good:" value={props.good} />
-        <StatisticLine text="Neutral:" value={props.neutral} />
-        <StatisticLine text="Bad:" value={props.bad} />
-        <StatisticLine
-          text="Total number of reviews:"
-          value={props.allReviews}
-        />
-        <StatisticLine text="Average:" value={props.average} />
-        <StatisticLine
-          text="Percentage of positive reviews:"
-          positivePercent={props.positivePercent}
-        />
-      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <StatisticLine text="Good:" value={props.good} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StatisticLine text="Neutral:" value={props.neutral} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StatisticLine text="Bad:" value={props.bad} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StatisticLine
+                text="Total number of reviews:"
+                value={props.allReviews}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StatisticLine text="Average:" value={props.average} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StatisticLine
+                text="Percentage of positive reviews:"
+                positivePercent={props.positivePercent}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     )
   } else {
     return (
@@ -94,17 +120,17 @@ interface StatisticLineProps {
 const StatisticLine = (props: StatisticLineProps) => {
   if (!props.positivePercent) {
     return (
-      <p>
+      <>
         {props.text}
         {props.value}
-      </p>
+      </>
     )
   } else {
     return (
-      <p>
+      <>
         {props.text}
         {props.positivePercent}%
-      </p>
+      </>
     )
   }
 }
