@@ -11,10 +11,33 @@ const App = () => {
     "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.",
     "The only way to go fast, is to go well.",
   ]
-
+  const lengthOfAnecdotes = anecdotes.length
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(new Array(lengthOfAnecdotes).fill(0))
 
-  return <div>{anecdotes[selected]}</div>
+  const addPoints = () => {
+    const copy = [...points]
+    copy[selected] += 1
+    setPoints(copy)
+    console.log(points)
+  }
+
+  const nextAnecdote = () => {
+    if (selected + 1 < lengthOfAnecdotes) {
+      setSelected(selected + 1)
+    } else {
+      setSelected(0)
+    }
+  }
+
+  return (
+    <div>
+      {anecdotes[selected]}
+      <br />
+      <button onClick={addPoints}>Vote</button>
+      <button onClick={nextAnecdote}>Next anecdote</button>
+    </div>
+  )
 }
 
 export default App
