@@ -8,11 +8,26 @@ const App = () => {
   const handleGood = () => {
     setGood(good + 1)
   }
+
   const handleNeutral = () => {
     setNeutral(neutral + 1)
   }
+
   const handleBad = () => {
     setBad(bad + 1)
+  }
+
+  const allReviews = () => {
+    return good + bad + neutral
+  }
+
+  const average = () => {
+    return (good - bad) / allReviews()
+  }
+
+  const positivePercent = () => {
+    const positivePercent = (good / allReviews()) * 100
+    return positivePercent.toFixed(1)
   }
 
   return (
@@ -25,6 +40,9 @@ const App = () => {
       <p>Good: {good}</p>
       <p>Neutral: {neutral}</p>
       <p>Bad: {bad}</p>
+      <p>Total number of reviews: {allReviews()}</p>
+      <p>Average: {average()}</p>
+      <p>Percentage of positive reviews: {positivePercent()}%</p>
     </div>
   )
 }
