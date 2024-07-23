@@ -36,13 +36,37 @@ const App = () => {
       <button onClick={handleGood}>Good!</button>
       <button onClick={handleNeutral}>Neutral!</button>
       <button onClick={handleBad}>Bad!</button>
+      <Statistics
+        good={good}
+        bad={bad}
+        neutral={neutral}
+        allReviews={allReviews()}
+        average={average()}
+        positivePercent={positivePercent()}
+      />
+    </div>
+  )
+}
+
+interface StatisticsProps {
+  good: number
+  bad: number
+  neutral: number
+  allReviews: number
+  average: number
+  positivePercent: string
+}
+
+const Statistics = (props: StatisticsProps) => {
+  return (
+    <div>
       <h2>Statistics!</h2>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>Total number of reviews: {allReviews()}</p>
-      <p>Average: {average()}</p>
-      <p>Percentage of positive reviews: {positivePercent()}%</p>
+      <p>Good: {props.good}</p>
+      <p>Neutral: {props.neutral}</p>
+      <p>Bad: {props.bad}</p>
+      <p>Total number of reviews: {props.allReviews}</p>
+      <p>Average: {props.average}</p>
+      <p>Percentage of positive reviews: {props.positivePercent}%</p>
     </div>
   )
 }
