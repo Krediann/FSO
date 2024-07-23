@@ -5,18 +5,6 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const handleGood = () => {
-    setGood(good + 1)
-  }
-
-  const handleNeutral = () => {
-    setNeutral(neutral + 1)
-  }
-
-  const handleBad = () => {
-    setBad(bad + 1)
-  }
-
   const allReviews = () => {
     return good + bad + neutral
   }
@@ -33,9 +21,12 @@ const App = () => {
   return (
     <div>
       <h1>Give feedback!</h1>
-      <button onClick={handleGood}>Good!</button>
-      <button onClick={handleNeutral}>Neutral!</button>
-      <button onClick={handleBad}>Bad!</button>
+      <Button handleClick={() => setGood(good + 1)} text="Good!"></Button>
+      <Button
+        handleClick={() => setNeutral(neutral + 1)}
+        text="Neutral!"
+      ></Button>
+      <Button handleClick={() => setBad(bad + 1)} text="Bad!"></Button>
       <h2>Statistics!</h2>
       <Statistics
         good={good}
@@ -62,12 +53,18 @@ const Statistics = (props: StatisticsProps) => {
   if (props.allReviews > 0) {
     return (
       <div>
-        <p>Good: {props.good}</p>
-        <p>Neutral: {props.neutral}</p>
-        <p>Bad: {props.bad}</p>
-        <p>Total number of reviews: {props.allReviews}</p>
-        <p>Average: {props.average}</p>
-        <p>Percentage of positive reviews: {props.positivePercent}%</p>
+        <StatisticLine text="Good:" value={props.good} />
+        <StatisticLine text="Neutral:" value={props.neutral} />
+        <StatisticLine text="Bad:" value={props.bad} />
+        <StatisticLine
+          text="Total number of reviews:"
+          value={props.allReviews}
+        />
+        <StatisticLine text="Average:" value={props.average} />
+        <StatisticLine
+          text="Percentage of positive reviews:"
+          positivePercent={props.positivePercent}
+        />
       </div>
     )
   } else {
@@ -75,6 +72,39 @@ const Statistics = (props: StatisticsProps) => {
       <div>
         <p>No feedback given</p>
       </div>
+    )
+  }
+}
+
+interface ButtonProps {
+  handleClick: () => void
+  text: string
+}
+
+const Button = (props: ButtonProps) => {
+  return <button onClick={props.handleClick}>{props.text}</button>
+}
+
+interface StatisticLineProps {
+  text: string
+  value?: number
+  positivePercent?: string
+}
+
+const StatisticLine = (props: StatisticLineProps) => {
+  if (!props.positivePercent) {
+    return (
+      <p>
+        {props.text}
+        {props.value}
+      </p>
+    )
+  } else {
+    return (
+      <p>
+        {props.text}
+        {props.positivePercent}%
+      </p>
     )
   }
 }
