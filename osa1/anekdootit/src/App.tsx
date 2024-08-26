@@ -34,10 +34,51 @@ const App = () => {
     <div>
       {anecdotes[selected]}
       <br />
-      <button onClick={addPoints}>Vote</button>
-      <button onClick={nextAnecdote}>Next anecdote</button>
+      <Button handleClick={() => addPoints()} text="Vote!" />
+      <Button handleClick={() => nextAnecdote()} text="Next anecdote!" />
+      <MostVotedAnecdote
+        points={points}
+        anecdotes={anecdotes}
+        header="Anecdote with most votes!"
+      />
     </div>
   )
 }
 
+interface ButtonProps {
+  text: string
+  handleClick: () => void
+}
+
+interface MostVotedAnecdoteProps {
+  points: number[]
+  anecdotes: string[]
+  header: string
+}
+
+const Button = (props: ButtonProps) => {
+  return <button onClick={props.handleClick}> {props.text}</button>
+}
+
+const MostVotedAnecdote = (props: MostVotedAnecdoteProps) => {
+  const mostVotes = Math.max(...props.points)
+  if (mostVotes === 0) {
+    return (
+      <div>
+        <h1>{props.header}</h1>
+        <p>No votes has been given!</p>
+      </div>
+    )
+  }
+
+  const mostVotedIndex = props.points.indexOf(mostVotes)
+  const mostVoted = props.anecdotes[mostVotedIndex]
+
+  return (
+    <div>
+      <h1>{props.header}</h1>
+      <p>{mostVoted}</p>
+    </div>
+  )
+}
 export default App
