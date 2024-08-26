@@ -8,10 +8,21 @@ interface Person {
   phoneNumber: string
 }
 
+interface Display {
+  persons: Person[]
+  filter: string
+}
+
 const App = () => {
-  const [persons, setPersons] = useState<Person[]>([])
+  const [persons, setPersons] = useState<Person[]>([
+    { name: "Arto Hellas", phoneNumber: "040-123456" },
+    { name: "Ada Lovelace", phoneNumber: "39-44-5323523" },
+    { name: "Dan Abramov", phoneNumber: "12-43-234345" },
+    { name: "Mary Poppendieck", phoneNumber: "39-23-6423122" },
+  ])
   const [newName, setNewName] = useState("")
   const [newPhonenumber, setNewPhonenumber] = useState("")
+  const [newFilter, setNewFilter] = useState("")
 
   const handleSubmit = (event: ButtonEvent) => {
     event.preventDefault()
@@ -42,9 +53,21 @@ const App = () => {
     setNewPhonenumber(event.target.value)
   }
 
+  const handleFilterInputChange = (event: InputChangeEvent) => {
+    setNewFilter(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        Filter shown with:{" "}
+        <input
+          type="text"
+          value={newFilter}
+          onChange={handleFilterInputChange}
+        />
+      </div>
       <form>
         <div>
           Name:{" "}
@@ -65,15 +88,26 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((person) => (
+      <Display persons={persons} filter={newFilter} />
+    </div>
+  )
+}
+
+const Display = (props: Display) => {
+  const existingPersons = props.persons.filter((person) =>
+    person.name.toLowerCase().includes(props.filter.toLowerCase())
+  )
+  return (
+    <div>
+      {existingPersons.map((person) => (
         <div key={person.name}>
+          {" "}
           <p>
             {person.name} {person.phoneNumber}
-          </p>
+          </p>{" "}
         </div>
       ))}
     </div>
   )
 }
-
 export default App
