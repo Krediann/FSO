@@ -9,6 +9,12 @@ const App = () => {
 
   const handleSubmit = (event: ButtonEvent) => {
     event.preventDefault()
+    const existingPerson = persons.filter((person) => person.name === newName)
+    if (existingPerson.length > 0) {
+      alert(`${newName} is already on the phonebook!`)
+      setNewName("")
+      return
+    }
     const copy = [...persons]
     copy.push({ name: newName })
     setPersons(copy)
