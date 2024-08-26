@@ -33,8 +33,10 @@ const Content = (props: CourseProps) => {
 }
 
 const Total = (props: CourseProps) => {
-  let total = 0
-  props.course.parts.map((part) => (total += part.exercises))
+  const total = props.course.parts.reduce(
+    (sum, part) => sum + part.exercises,
+    0
+  )
 
   return (
     <div>
