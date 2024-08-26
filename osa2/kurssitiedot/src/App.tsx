@@ -43,6 +43,16 @@ const Total = (props: CourseProps) => {
   )
 }
 
+const Course = (props: CourseProps) => {
+  return (
+    <div>
+      <Header course={props.course} />
+      <Content course={props.course} />
+      <Total course={props.course} />
+    </div>
+  )
+}
+
 const App = () => {
   const course = {
     name: "Half Stack application development",
@@ -55,10 +65,7 @@ const App = () => {
 
   return (
     <div>
-      <Header course={course} />
-
-      <Content course={course} />
-      {<Total course={course} />}
+      <Course course={course} />
     </div>
   )
 }
