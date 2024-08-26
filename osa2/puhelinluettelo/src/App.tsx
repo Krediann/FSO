@@ -1,16 +1,12 @@
 import { useState } from "react"
+import { Display } from "./components/Display"
+import { Filter } from "./components/Filter"
+import { PersonForm } from "./components/Form"
 
-type ButtonEvent = React.FormEvent<HTMLButtonElement>
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
-
-interface Person {
+export interface Person {
   name: string
   phoneNumber: string
-}
-
-interface Display {
-  persons: Person[]
-  filter: string
 }
 
 const App = () => {
@@ -24,7 +20,7 @@ const App = () => {
   const [newPhonenumber, setNewPhonenumber] = useState("")
   const [newFilter, setNewFilter] = useState("")
 
-  const handleSubmit = (event: ButtonEvent) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     const existingPerson = persons.filter(
       (person) =>
@@ -60,54 +56,22 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Filter shown with:{" "}
-        <input
-          type="text"
-          value={newFilter}
-          onChange={handleFilterInputChange}
-        />
-      </div>
-      <form>
-        <div>
-          Name:{" "}
-          <input type="text" value={newName} onChange={handleNameInputChange} />
-        </div>
-        <div>
-          Phonenumber:{" "}
-          <input
-            type="tel"
-            value={newPhonenumber}
-            onChange={handlePhoneNumberInputChange}
-          />
-        </div>
-        <div>
-          <button onClick={handleSubmit} type="submit">
-            add
-          </button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
+
+      <Filter filter={newFilter} handleFilterChange={handleFilterInputChange} />
+
+      <h3>Add a new</h3>
+      <PersonForm
+        name={newName}
+        handleNameChange={handleNameInputChange}
+        phoneNumber={newPhonenumber}
+        handlePhoneNumberChange={handlePhoneNumberInputChange}
+        handleClick={handleSubmit}
+      />
+
+      <h3>Numbers</h3>
       <Display persons={persons} filter={newFilter} />
     </div>
   )
 }
 
-const Display = (props: Display) => {
-  const existingPersons = props.persons.filter((person) =>
-    person.name.toLowerCase().includes(props.filter.toLowerCase())
-  )
-  return (
-    <div>
-      {existingPersons.map((person) => (
-        <div key={person.name}>
-          {" "}
-          <p>
-            {person.name} {person.phoneNumber}
-          </p>{" "}
-        </div>
-      ))}
-    </div>
-  )
-}
 export default App
