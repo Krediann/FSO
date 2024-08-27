@@ -11,3 +11,7 @@ export const create = (newPerson: Person) => {
   const req = axios.post(baseUrl, newPerson)
   return req.then((res) => res.data)
 }
+
+export const deletePersonById = (id: number) => {
+  return axios.delete(`${baseUrl}/${id}`)
+}

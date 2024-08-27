@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import { Display } from "./components/Display"
 import { Filter } from "./components/Filter"
 import { PersonForm } from "./components/Form"
-import { create, getAll } from "./services/persons"
+import { create, deletePersonById, getAll } from "./services/persons"
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
 export interface Person {
   name: string
   phoneNumber: string
-  id: string
+  id: number
 }
 
 const App = () => {
@@ -22,6 +22,19 @@ const App = () => {
       setPersons(initialPersons)
     })
   }, [])
+
+  const handleDelete = (id: number) => {
+    const person = persons.find((person) => person.id === id)
+    if (!person) {
+      alert("no person")
+      return
+    }
+    if (window.confirm(`Are you sure you want to delete ${person.name} ?`)) {
+      deletePersonById(id).then(() => {
+        setPersons(persons.filter((person) => person.id !== id))
+      })
+    }
+  }
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
@@ -75,7 +88,11 @@ const App = () => {
       />
 
       <h3>Numbers</h3>
-      <Display persons={persons} filter={newFilter} />
+      <Display
+        persons={persons}
+        filter={newFilter}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }

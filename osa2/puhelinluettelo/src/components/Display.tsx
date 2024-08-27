@@ -3,6 +3,7 @@ import { Person } from "../App"
 interface Display {
   persons: Person[]
   filter: string
+  handleDelete: (id: number) => void
 }
 
 export const Display = (props: Display) => {
@@ -12,10 +13,13 @@ export const Display = (props: Display) => {
   return (
     <div>
       {existingPersons.map((person) => (
-        <div key={person.name}>
+        <div key={person.id}>
           {" "}
           <p>
-            {person.name} {person.phoneNumber}
+            {person.name} {person.phoneNumber}{" "}
+            <button onClick={() => props.handleDelete(person.id)}>
+              Delete
+            </button>
           </p>{" "}
         </div>
       ))}
