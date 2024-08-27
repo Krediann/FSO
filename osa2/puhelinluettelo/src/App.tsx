@@ -1,13 +1,14 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { Display } from "./components/Display"
 import { Filter } from "./components/Filter"
 import { PersonForm } from "./components/Form"
+import { create, getAll } from "./services/persons"
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
 export interface Person {
   name: string
   phoneNumber: string
+  id: string
 }
 
 const App = () => {
@@ -17,8 +18,8 @@ const App = () => {
   const [newFilter, setNewFilter] = useState("")
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((res) => {
-      setPersons(res.data)
+    getAll().then((initialPersons) => {
+      setPersons(initialPersons)
     })
   }, [])
 
@@ -36,11 +37,14 @@ const App = () => {
       setNewPhonenumber("")
       return
     }
-    const copy = [...persons]
-    copy.push({ name: newName, phoneNumber: newPhonenumber })
-    setPersons(copy)
-    setNewName("")
-    setNewPhonenumber("")
+    const newId = persons[persons.length - 1].id + 1
+    const newPerson = { name: newName, phoneNumber: newPhonenumber, id: newId }
+
+    create(newPerson).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson))
+      setNewName("")
+      setNewPhonenumber("")
+    })
   }
 
   const handleNameInputChange = (event: InputChangeEvent) => {
