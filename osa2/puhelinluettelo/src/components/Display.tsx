@@ -3,7 +3,7 @@ import { Person } from "../App"
 interface Display {
   persons: Person[]
   filter: string
-  handleDelete: (id: number) => void
+  handleDelete: (id: string) => void
 }
 
 export const Display = (props: Display) => {

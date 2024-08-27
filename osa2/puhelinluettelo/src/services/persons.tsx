@@ -12,6 +12,12 @@ export const create = (newPerson: Person) => {
   return req.then((res) => res.data)
 }
 
-export const deletePersonById = (id: number) => {
+export const deletePersonById = (id: string) => {
   return axios.delete(`${baseUrl}/${id}`)
+}
+
+export const update = (updatedPerson: Person) => {
+  const id = updatedPerson.id
+  const req = axios.put(`${baseUrl}/${id}`, updatedPerson)
+  return req.then((res) => res.data)
 }

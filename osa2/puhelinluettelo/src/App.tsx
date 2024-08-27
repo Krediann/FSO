@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import { Display } from "./components/Display"
 import { Filter } from "./components/Filter"
 import { PersonForm } from "./components/Form"
-import { create, deletePersonById, getAll } from "./services/persons"
+import { create, deletePersonById, getAll, update } from "./services/persons"
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
 export interface Person {
   name: string
   phoneNumber: string
-  id: number
+  id: string
 }
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
     })
   }, [])
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     const person = persons.find((person) => person.id === id)
     if (!person) {
       alert("no person")
@@ -38,19 +38,30 @@ const App = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
-    const existingPerson = persons.filter(
-      (person) =>
-        person.name === newName || person.phoneNumber === newPhonenumber
-    )
-    if (existingPerson.length > 0) {
-      alert(
-        `Person: ${newName} or Phonenumber: ${newPhonenumber} is already on the phonebook!`
-      )
+    const existingPerson = persons.find((person) => person.name === newName)
+    if (existingPerson) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const updatedPerson = {
+          ...existingPerson,
+          phoneNumber: newPhonenumber,
+        }
+        update(updatedPerson).then((returnedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== updatedPerson.id ? person : returnedPerson
+            )
+          )
+        })
+      }
       setNewName("")
       setNewPhonenumber("")
       return
     }
-    const newId = persons[persons.length - 1].id + 1
+    const newId = (parseInt(persons[persons.length - 1].id) + 1).toString()
     const newPerson = { name: newName, phoneNumber: newPhonenumber, id: newId }
 
     create(newPerson).then((returnedPerson) => {
