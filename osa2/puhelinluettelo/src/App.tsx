@@ -1,4 +1,5 @@
-import { useState } from "react"
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { Display } from "./components/Display"
 import { Filter } from "./components/Filter"
 import { PersonForm } from "./components/Form"
@@ -10,15 +11,16 @@ export interface Person {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState<Person[]>([
-    { name: "Arto Hellas", phoneNumber: "040-123456" },
-    { name: "Ada Lovelace", phoneNumber: "39-44-5323523" },
-    { name: "Dan Abramov", phoneNumber: "12-43-234345" },
-    { name: "Mary Poppendieck", phoneNumber: "39-23-6423122" },
-  ])
+  const [persons, setPersons] = useState<Person[]>([])
   const [newName, setNewName] = useState("")
   const [newPhonenumber, setNewPhonenumber] = useState("")
   const [newFilter, setNewFilter] = useState("")
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((res) => {
+      setPersons(res.data)
+    })
+  }, [])
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
