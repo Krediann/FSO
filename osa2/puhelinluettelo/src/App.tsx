@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Display } from "./components/Display"
+import { Error } from "./components/Error"
 import { Filter } from "./components/Filter"
 import { PersonForm } from "./components/Form"
 import { Notification } from "./components/Notification"
@@ -18,6 +19,7 @@ const App = () => {
   const [newPhonenumber, setNewPhonenumber] = useState("")
   const [newFilter, setNewFilter] = useState("")
   const [infoMessage, setInfoMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
 
   useEffect(() => {
     getAll().then((initialPersons) => {
@@ -55,17 +57,26 @@ const App = () => {
           ...existingPerson,
           phoneNumber: newPhonenumber,
         }
-        update(updatedPerson).then((returnedPerson) => {
-          setPersons(
-            persons.map((person) =>
-              person.id !== updatedPerson.id ? person : returnedPerson
+        update(updatedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== updatedPerson.id ? person : returnedPerson
+              )
             )
-          )
-          setInfoMessage(`Updated ${updatedPerson.name}'s phone number!`)
-          setTimeout(() => {
-            setInfoMessage("")
-          }, 3000)
-        })
+            setInfoMessage(`Updated ${updatedPerson.name}'s phone number!`)
+            setTimeout(() => {
+              setInfoMessage("")
+            }, 3000)
+          })
+          .catch((error) => {
+            setErrorMessage(
+              `Updating ${updatedPerson.name} failed because of: ${error}`
+            )
+            setTimeout(() => {
+              setErrorMessage("")
+            }, 3000)
+          })
       }
       setNewName("")
       setNewPhonenumber("")
@@ -101,6 +112,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={infoMessage} />
+      <Error errorMessage={errorMessage} />
 
       <Filter filter={newFilter} handleFilterChange={handleFilterInputChange} />
 
