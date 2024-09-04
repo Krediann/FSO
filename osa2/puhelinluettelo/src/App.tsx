@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Display } from "./components/Display"
 import { Filter } from "./components/Filter"
 import { PersonForm } from "./components/Form"
+import { Notification } from "./components/Notification"
 import { create, deletePersonById, getAll, update } from "./services/persons"
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
@@ -16,6 +17,7 @@ const App = () => {
   const [newName, setNewName] = useState("")
   const [newPhonenumber, setNewPhonenumber] = useState("")
   const [newFilter, setNewFilter] = useState("")
+  const [infoMessage, setInfoMessage] = useState("")
 
   useEffect(() => {
     getAll().then((initialPersons) => {
@@ -32,6 +34,10 @@ const App = () => {
     if (window.confirm(`Are you sure you want to delete ${person.name} ?`)) {
       deletePersonById(id).then(() => {
         setPersons(persons.filter((person) => person.id !== id))
+        setInfoMessage(`${person.name} deleted!`)
+        setTimeout(() => {
+          setInfoMessage("")
+        }, 3000)
       })
     }
   }
@@ -55,6 +61,10 @@ const App = () => {
               person.id !== updatedPerson.id ? person : returnedPerson
             )
           )
+          setInfoMessage(`Updated ${updatedPerson.name}'s phone number!`)
+          setTimeout(() => {
+            setInfoMessage("")
+          }, 3000)
         })
       }
       setNewName("")
@@ -66,6 +76,10 @@ const App = () => {
 
     create(newPerson).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson))
+      setInfoMessage(`Added ${newPerson.name}`)
+      setTimeout(() => {
+        setInfoMessage("")
+      }, 3000)
       setNewName("")
       setNewPhonenumber("")
     })
@@ -86,6 +100,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={infoMessage} />
 
       <Filter filter={newFilter} handleFilterChange={handleFilterInputChange} />
 
