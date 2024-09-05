@@ -9,6 +9,7 @@ export interface Country {
   languages: { [key: string]: string }
   area: number
   flags: { png: string }
+  capitalInfo: { latlng: number[] }
 }
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
@@ -35,7 +36,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>asd</h1>
+      <h1>Country tingy</h1>
       <Filter filter={newFilter} handleFilterChange={handleFilterInputChange} />
       <Display
         countries={countries}
