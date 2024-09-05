@@ -16,6 +16,7 @@ type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
 const App = () => {
   const [newFilter, setNewFilter] = useState("")
   const [countries, setCountries] = useState<Country[]>([])
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null)
 
   useEffect(() => {
     getAll().then((initialCountries) => {
@@ -25,14 +26,25 @@ const App = () => {
 
   const handleFilterInputChange = (event: InputChangeEvent) => {
     setNewFilter(event.target.value)
+    setSelectedCountry(null)
+  }
+
+  const handleShowCountry = (country: Country) => {
+    setSelectedCountry(country)
   }
 
   return (
     <div>
       <h1>asd</h1>
       <Filter filter={newFilter} handleFilterChange={handleFilterInputChange} />
-      <Display countries={countries} filter={newFilter} />
+      <Display
+        countries={countries}
+        filter={newFilter}
+        selectedCountry={selectedCountry}
+        handleShowCountry={handleShowCountry}
+      />
     </div>
   )
 }
+
 export default App
