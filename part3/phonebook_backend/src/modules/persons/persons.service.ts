@@ -1,3 +1,5 @@
+import { Person } from "./persons.controller"
+
 export let persons = [
   {
     id: "1",
@@ -30,6 +32,21 @@ const getById = async (id: string) => {
   return person
 }
 
+const createPerson = async (body: Person) => {
+  const existingPerson = persons.find((person) => person.name === body.name)
+
+  if (existingPerson) {
+    return !existingPerson
+  }
+
+  const id = (Math.random() * (99999999999999999999999 - 1) + 1).toString()
+
+  const newPerson = { ...body, id: id }
+  persons.push(newPerson)
+
+  return !!newPerson
+}
+
 const deleteById = async (id: string) => {
   const initialLength = persons.length
   persons = persons.filter((person) => person.id !== id)
@@ -39,5 +56,6 @@ const deleteById = async (id: string) => {
 export const personsService = {
   getAll,
   getById,
+  createPerson,
   deleteById,
 }

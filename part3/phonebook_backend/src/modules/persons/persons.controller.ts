@@ -18,6 +18,29 @@ const getById = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json(person)
 }
 
+export interface Person {
+  name: string
+  number: string
+}
+
+const createPerson = async (req: Request, res: Response) => {
+  const body: Person = req.body
+
+  if (!body.name || !body.number) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: "Name or phonenumber is missing!" })
+  }
+
+  const wasCreated = await personsService.createPerson(body)
+  if (!wasCreated) {
+    return res
+      .status(StatusCodes.CONFLICT)
+      .json({ error: "Name must be unique!" })
+  }
+  res.sendStatus(StatusCodes.CREATED)
+}
+
 const deleteById = async (req: Request, res: Response) => {
   const id = req.params.id
   const wasDeleted = await personsService.deleteById(id)
@@ -25,11 +48,12 @@ const deleteById = async (req: Request, res: Response) => {
     res.status(StatusCodes.NOT_FOUND).json({ error: "Person not found!" })
   }
 
-  res.status(StatusCodes.NO_CONTENT).end()
+  res.sendStatus(StatusCodes.NO_CONTENT)
 }
 
 export const personsController = {
   getAllPersons,
   getById,
+  createPerson,
   deleteById,
 }

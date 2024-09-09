@@ -6,4 +6,6 @@ personsRouter.get("/", personsController.getAllPersons)
 
 personsRouter.get("/:id", personsController.getById)
 
+personsRouter.post("/", personsController.createPerson)
+
 personsRouter.delete("/:id", personsController.deleteById)
