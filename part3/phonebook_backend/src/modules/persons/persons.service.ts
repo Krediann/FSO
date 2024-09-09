@@ -1,4 +1,4 @@
-export const persons = [
+export let persons = [
   {
     id: "1",
     name: "Arto Hellas",
@@ -30,7 +30,14 @@ const getById = async (id: string) => {
   return person
 }
 
+const deleteById = async (id: string) => {
+  const initialLength = persons.length
+  persons = persons.filter((person) => person.id !== id)
+  return persons.length < initialLength
+}
+
 export const personsService = {
   getAll,
   getById,
+  deleteById,
 }

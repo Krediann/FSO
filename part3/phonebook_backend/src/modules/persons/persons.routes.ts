@@ -5,3 +5,5 @@ export const personsRouter = express.Router()
 personsRouter.get("/", personsController.getAllPersons)
 
 personsRouter.get("/:id", personsController.getById)
+
+personsRouter.delete("/:id", personsController.deleteById)

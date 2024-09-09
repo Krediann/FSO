@@ -18,7 +18,18 @@ const getById = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json(person)
 }
 
+const deleteById = async (req: Request, res: Response) => {
+  const id = req.params.id
+  const wasDeleted = await personsService.deleteById(id)
+  if (!wasDeleted) {
+    res.status(StatusCodes.NOT_FOUND).json({ error: "Person not found!" })
+  }
+
+  res.status(StatusCodes.NO_CONTENT).end()
+}
+
 export const personsController = {
   getAllPersons,
   getById,
+  deleteById,
 }
