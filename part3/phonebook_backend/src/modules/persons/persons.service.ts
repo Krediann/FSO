@@ -25,6 +25,12 @@ const getAll = async () => {
   return persons
 }
 
+const getById = async (id: string) => {
+  const person = persons.find((person) => person.id === id)
+  return person
+}
+
 export const personsService = {
   getAll,
+  getById,
 }
