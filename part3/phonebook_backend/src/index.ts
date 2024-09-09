@@ -1,7 +1,12 @@
 import express from "express"
+import { infoRouter } from "./modules/info/info.router"
 import { personsRouter } from "./modules/persons/persons.routes"
 
 const app = express()
+
+app.use(express.json())
+
+app.use("/info", infoRouter)
 
 // Routes
 const apiRouter = express.Router()
