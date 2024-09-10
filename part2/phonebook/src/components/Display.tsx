@@ -16,7 +16,7 @@ export const Display = (props: Display) => {
         <div key={person.id}>
           {" "}
           <p>
-            {person.name} {person.phoneNumber}{" "}
+            {person.name} {person.number}{" "}
             <button onClick={() => props.handleDelete(person.id)}>
               Delete
             </button>

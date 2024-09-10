@@ -9,7 +9,7 @@ import { create, deletePersonById, getAll, update } from "./services/persons"
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
 export interface Person {
   name: string
-  phoneNumber: string
+  number: string
   id: string
 }
 
@@ -83,7 +83,7 @@ const App = () => {
       return
     }
     const newId = (parseInt(persons[persons.length - 1].id) + 1).toString()
-    const newPerson = { name: newName, phoneNumber: newPhonenumber, id: newId }
+    const newPerson = { name: newName, number: newPhonenumber, id: newId }
 
     create(newPerson).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson))

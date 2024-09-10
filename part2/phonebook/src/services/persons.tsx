@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Person } from "../App"
-const baseUrl = "http://localhost:3001/persons"
+const baseUrl = "http://localhost:3001/api/persons"
 
 export const getAll = () => {
   const req = axios.get(baseUrl)
