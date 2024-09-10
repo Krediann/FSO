@@ -1,23 +1,50 @@
 import axios from "axios"
-import { Person } from "../App"
-const baseUrl = "http://localhost:3001/api/persons"
+import { Person } from "../types/persons"
+const baseUrl = import.meta.env.VITE_BASE_URL
 
-export const getAll = () => {
-  const req = axios.get(baseUrl)
-  return req.then((res) => res.data)
+export const getAll = async () => {
+  const response = await axios
+    .get<Person[]>(baseUrl)
+    .then(({ data }) => {
+      return data
+    })
+    .catch(() => {
+      throw new Error("Failed to fetch persons!")
+    })
+
+  return response
 }
 
-export const create = (newPerson: Person) => {
-  const req = axios.post(baseUrl, newPerson)
-  return req.then((res) => res.data)
+export const create = async (newPerson: Person) => {
+  const response = await axios
+    .post<Person>(baseUrl, newPerson)
+    .then(({ data }) => {
+      return data
+    })
+    .catch(() => {
+      throw new Error("Failed to create a new person!")
+    })
+  return response
 }
 
-export const deletePersonById = (id: string) => {
-  return axios.delete(`${baseUrl}/${id}`)
+export const deletePersonById = async (id: string) => {
+  const response = await axios
+    .delete<Person[]>(`${baseUrl}/${id}`)
+    .then(({ data }) => {
+      return data
+    })
+    .catch(() => {
+      throw new Error("Failed to delete a person!")
+    })
+  return response
 }
 
-export const update = (updatedPerson: Person) => {
+export const update = async (updatedPerson: Person) => {
   const id = updatedPerson.id
-  const req = axios.put(`${baseUrl}/${id}`, updatedPerson)
-  return req.then((res) => res.data)
+  const response = await axios
+    .put<Person[]>(`${baseUrl}/${id}`, updatedPerson)
+    .then(({ data }) => {
+      return data
+    })
+  return response
 }

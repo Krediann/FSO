@@ -1,6 +1,6 @@
 interface Form {
   name: string
-  phoneNumber: string
+  number: string
   handleNameChange: React.ChangeEventHandler<HTMLInputElement>
   handlePhoneNumberChange: React.ChangeEventHandler<HTMLInputElement>
   handleClick: React.FormEventHandler<HTMLFormElement>
@@ -21,7 +21,7 @@ export const PersonForm = (props: Form) => {
         Phonenumber:{" "}
         <input
           type="tel"
-          value={props.phoneNumber}
+          value={props.number}
           onChange={props.handlePhoneNumberChange}
         />
       </div>

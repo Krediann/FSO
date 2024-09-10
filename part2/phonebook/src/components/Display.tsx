@@ -1,4 +1,4 @@
-import { Person } from "../App"
+import { Person } from "../types/persons"
 
 interface Display {
   persons: Person[]
@@ -7,6 +7,7 @@ interface Display {
 }
 
 export const Display = (props: Display) => {
+  console.log(props.persons)
   const existingPersons = props.persons.filter((person) =>
     person.name.toLowerCase().includes(props.filter.toLowerCase())
   )
