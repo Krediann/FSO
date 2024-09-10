@@ -39,7 +39,7 @@ const createPerson = async (body: Person) => {
     return !existingPerson
   }
 
-  const id = (Math.random() * (99999999999999999999999 - 1) + 1).toString()
+  const id = (parseInt(persons[persons.length - 1].id) + 1).toString()
 
   const newPerson = { ...body, id: id }
   persons.push(newPerson)
