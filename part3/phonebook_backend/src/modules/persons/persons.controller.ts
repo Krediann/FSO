@@ -32,13 +32,14 @@ const createPerson = async (req: Request, res: Response) => {
       .json({ error: "Name or phonenumber is missing!" })
   }
 
-  const wasCreated = await personsService.createPerson(body)
-  if (!wasCreated) {
+  const newPerson = await personsService.createPerson(body)
+  if (!newPerson) {
     return res
       .status(StatusCodes.CONFLICT)
       .json({ error: "Name must be unique!" })
   }
-  res.sendStatus(StatusCodes.CREATED)
+  console.log(newPerson.id, "ID IS HERE")
+  res.status(StatusCodes.CREATED).json(newPerson)
 }
 
 const deleteById = async (req: Request, res: Response) => {

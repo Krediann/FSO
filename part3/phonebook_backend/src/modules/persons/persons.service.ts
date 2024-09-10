@@ -44,7 +44,7 @@ const createPerson = async (body: Person) => {
   const newPerson = { ...body, id: id }
   persons.push(newPerson)
 
-  return !!newPerson
+  return newPerson
 }
 
 const deleteById = async (id: string) => {
