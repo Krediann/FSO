@@ -7,7 +7,7 @@
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build",
-    "start": "tsc --build && node ./lib/index.js && node ./dist/index.js",
+    "start": "tsc --build && node ./lib/index.js",
     "dev": "nodemon ./src/index.ts"
   },
   "keywords": [],
