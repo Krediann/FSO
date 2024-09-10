@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Person } from "../types/persons"
-const baseUrl = import.meta.env.VITE_BASE_URL
+const baseUrl = "/api/persons"
 
 export const getAll = async () => {
   const response = await axios
