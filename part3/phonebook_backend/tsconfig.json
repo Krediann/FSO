@@ -8,7 +8,7 @@
     "noResolve": false,
     "allowJs": false,
     "noEmit": false,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

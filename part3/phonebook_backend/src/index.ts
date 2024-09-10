@@ -6,11 +6,8 @@ import { personsRouter } from "./modules/persons/persons.routes"
 
 const app = express()
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
-  })
-)
+app.use(express.static("dist"))
+app.use(cors())
 
 app.use(express.json())
 app.use(requestLogger)

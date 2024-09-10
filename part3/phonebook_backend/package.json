@@ -1,11 +1,13 @@
 {
   "name": "phonebook_backend",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "build:ui": "rm -rf dist && cd ../../part2/phonebook && npm run build && cp -r dist ../../part3/phonebook_backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build",
-    "start": "tsc --build && node ./dist/index.js",
+    "start": "tsc --build && node ./lib/index.js && node ./dist/index.js",
     "dev": "nodemon ./src/index.ts"
   },
   "keywords": [],

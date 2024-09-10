@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/modules/persons/persons.controller.ts","./src/modules/persons/persons.routes.ts","./src/modules/persons/persons.service.ts"],"version":"5.6.2"}
+{"root":["./src/index.ts","./src/middleware/requestlogger.ts","./src/modules/info/info.controller.ts","./src/modules/info/info.router.ts","./src/modules/info/info.service.ts","./src/modules/persons/persons.controller.ts","./src/modules/persons/persons.routes.ts","./src/modules/persons/persons.service.ts"],"version":"5.6.2"}
