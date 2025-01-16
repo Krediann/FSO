@@ -34,18 +34,13 @@ const getById = async (id: string) => {
 }
 
 const createPerson = async (body: IPerson) => {
-  const existingPerson = persons1.find((person) => person.name === body.name)
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  })
 
-  if (existingPerson) {
-    return !existingPerson
-  }
-
-  const id = (parseInt(persons1[persons1.length - 1].id) + 1).toString()
-
-  const newPerson = { ...body, id: id }
-  persons1.push(newPerson)
-
-  return newPerson
+  const savedPerson = await person.save()
+  return savedPerson
 }
 
 const deleteById = async (id: string) => {
