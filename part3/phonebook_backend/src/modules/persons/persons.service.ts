@@ -1,6 +1,6 @@
-import { Person } from "./persons.controller"
-
-export let persons = [
+import { Person } from "../../model/person"
+import { IPerson } from "./persons.controller"
+export let persons1 = [
   {
     id: "1",
     name: "Arto Hellas",
@@ -24,33 +24,34 @@ export let persons = [
 ]
 
 const getAll = async () => {
-  return persons
+  const persons = await Person.find({})
+  return persons.map((person) => person.toJSON())
 }
 
 const getById = async (id: string) => {
-  const person = persons.find((person) => person.id === id)
+  const person = persons1.find((person) => person.id === id)
   return person
 }
 
-const createPerson = async (body: Person) => {
-  const existingPerson = persons.find((person) => person.name === body.name)
+const createPerson = async (body: IPerson) => {
+  const existingPerson = persons1.find((person) => person.name === body.name)
 
   if (existingPerson) {
     return !existingPerson
   }
 
-  const id = (parseInt(persons[persons.length - 1].id) + 1).toString()
+  const id = (parseInt(persons1[persons1.length - 1].id) + 1).toString()
 
   const newPerson = { ...body, id: id }
-  persons.push(newPerson)
+  persons1.push(newPerson)
 
   return newPerson
 }
 
 const deleteById = async (id: string) => {
-  const initialLength = persons.length
-  persons = persons.filter((person) => person.id !== id)
-  return persons.length < initialLength
+  const initialLength = persons1.length
+  persons1 = persons1.filter((person) => person.id !== id)
+  return persons1.length < initialLength
 }
 
 export const personsService = {

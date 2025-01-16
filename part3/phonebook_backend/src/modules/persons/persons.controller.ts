@@ -4,6 +4,7 @@ import { personsService } from "./persons.service"
 
 const getAllPersons = async (req: Request, res: Response) => {
   const persons = await personsService.getAll()
+  console.log(persons)
   res.status(StatusCodes.OK).json(persons)
 }
 
@@ -18,13 +19,13 @@ const getById = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json(person)
 }
 
-export interface Person {
+export interface IPerson {
   name: string
   number: string
 }
 
 const createPerson = async (req: Request, res: Response) => {
-  const body: Person = req.body
+  const body: IPerson = req.body
 
   if (!body.name || !body.number) {
     return res

@@ -1,4 +1,5 @@
 import cors from "cors"
+import "dotenv/config"
 import express from "express"
 import { requestLogger } from "./middleware/requestLogger"
 import { infoRouter } from "./modules/info/info.router"
